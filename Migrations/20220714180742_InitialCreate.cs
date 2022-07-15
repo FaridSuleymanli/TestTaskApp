@@ -28,8 +28,7 @@ namespace TestTaskApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AddressId = table.Column<long>(type: "bigint", nullable: true),
-                    AddressId1 = table.Column<long>(type: "bigint", nullable: true)
+                    AddressId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -39,12 +38,6 @@ namespace TestTaskApp.Migrations
                         column: x => x.AddressId,
                         principalTable: "Addresses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Persons_Addresses_AddressId1",
-                        column: x => x.AddressId1,
-                        principalTable: "Addresses",
-                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -52,11 +45,6 @@ namespace TestTaskApp.Migrations
                 name: "IX_Persons_AddressId",
                 table: "Persons",
                 column: "AddressId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Persons_AddressId1",
-                table: "Persons",
-                column: "AddressId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

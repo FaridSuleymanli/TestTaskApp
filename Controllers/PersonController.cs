@@ -32,8 +32,24 @@ namespace TestTaskApp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Save([FromBody] string json, CancellationToken cancellationToken)
+        public async Task<ActionResult> Save(CancellationToken cancellationToken)
         {
+            string json = @"{ 
+
+firstName: ‘Ivan’, 
+
+lastName: ‘Petrov’, 
+
+address: { 
+
+ 		city: ‘Kiev’, 
+
+addressLine: prospect “Peremogy” 28/7
+
+} 
+
+}";
+
             await _repository.Save(json, cancellationToken);
 
             return Ok();

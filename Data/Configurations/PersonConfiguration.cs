@@ -17,7 +17,7 @@ namespace TestTaskApp.Data.Configurations
             builder.HasOne<Address>()
                 .WithMany()
                 .HasForeignKey(x => x.AddressId)
-                .HasPrincipalKey(s => s.Id)
+                .HasPrincipalKey(a => a.Id)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

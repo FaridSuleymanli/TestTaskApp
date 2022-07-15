@@ -41,30 +41,20 @@ namespace TestTaskApp.Repositories
                 person = person.Where(x => x.Address.City == requestDto.City);
             }
 
-            var personQueryable = person;
-
-            var serializerOptions = new JsonSerializerOptions
+            var obj = new JsonObject
             {
-                WriteIndented = true
+                People = person.ToList()
             };
-            serializerOptions.Converters.Add(new StringJsonConverter());
 
-            string json = JsonSerializer.Serialize(personQueryable, serializerOptions);
+            string json = obj.ToString();
 
             return json;
         }
 
         public async Task Save(string json, CancellationToken cancellationToken)
         {
-            var serializerOptions = new JsonSerializerOptions
-            {
-                WriteIndented = true,
-                NumberHandling = JsonNumberHandling.AllowReadingFromString |
-                                 JsonNumberHandling.WriteAsString
-            };
-            serializerOptions.Converters.Add(new StringJsonConverter());
-            
-            var person = JsonSerializer.Deserialize<Person>(json, serializerOptions);
+            var person = new Person();
+            person.JsonParse(json);
 
             await _repository.Add(person, cancellationToken);
         }
