@@ -33,8 +33,7 @@ namespace TestTaskApp
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers().AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            services.AddControllers();
             services.AddDbContext<TaskDbContext>(options =>
             {
                 options.UseSqlServer(Configuration["ConnectionStrings:Default"]);

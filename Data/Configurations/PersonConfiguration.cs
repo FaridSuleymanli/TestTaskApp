@@ -14,7 +14,8 @@ namespace TestTaskApp.Data.Configurations
         {
             builder.ToTable("Persons");
             builder.HasKey(x => x.Id);
-            builder.HasOne<Address>()
+
+            builder.HasOne(p => p.Address)
                 .WithMany()
                 .HasForeignKey(x => x.AddressId)
                 .HasPrincipalKey(a => a.Id)

@@ -47,9 +47,6 @@ namespace TestTaskApp.Migrations
                     b.Property<long?>("AddressId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("AddressId1")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
@@ -60,21 +57,15 @@ namespace TestTaskApp.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("AddressId1");
-
                     b.ToTable("Persons");
                 });
 
             modelBuilder.Entity("TestTaskApp.Models.Person", b =>
                 {
-                    b.HasOne("TestTaskApp.Models.Address", null)
+                    b.HasOne("TestTaskApp.Models.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("TestTaskApp.Models.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId1");
 
                     b.Navigation("Address");
                 });

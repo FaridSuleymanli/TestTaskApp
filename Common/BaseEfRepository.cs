@@ -23,14 +23,14 @@ namespace TestTaskApp.Common
             UnitOfWork = unitOfWork;
         }
 
-        public Task<TModel> Get(Expression<Func<TModel, bool>> predicate = null, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IQueryable<TModel>> GetListAsQueryable(CancellationToken cancellationToken = default)
         {
             return await Task.FromResult(Table);
+        }
+
+        public Task<TModel> Get(Expression<Func<TModel, bool>> predicate = null, CancellationToken cancellationToken = default)
+        {
+            return Table.AsNoTracking().FirstOrDefaultAsync(predicate, cancellationToken: cancellationToken);
         }
 
         public Task<IQueryable<TModel>> GetListWithIncludingAsQueryable(CancellationToken cancellationToken = default, params Expression<Func<TModel, object>>[] includeProperties)
@@ -44,6 +44,13 @@ namespace TestTaskApp.Common
         {
             _context.Add(entity);
             await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public Task<TModel> GetWithIncludingAsQueryable(IQueryable<TModel> model, CancellationToken cancellationToken = default, params Expression<Func<TModel, object>>[] includeProperties)
+        {
+            IQueryable<TModel> inquery = model;
+            inquery = includeProperties.Aggregate(inquery, (current, includeProperty) => current.Include(includeProperty));
+            return inquery.FirstOrDefaultAsync(cancellationToken);
         }
     }
 }

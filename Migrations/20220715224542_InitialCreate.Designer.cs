@@ -10,7 +10,7 @@ using TestTaskApp.Data;
 namespace TestTaskApp.Migrations
 {
     [DbContext(typeof(TaskDbContext))]
-    [Migration("20220714180742_InitialCreate")]
+    [Migration("20220715224542_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,7 +66,8 @@ namespace TestTaskApp.Migrations
                 {
                     b.HasOne("TestTaskApp.Models.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId");
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Address");
                 });

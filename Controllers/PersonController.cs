@@ -26,30 +26,14 @@ namespace TestTaskApp.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Person>>> GetAll([FromQuery] GetAllRequestDto requestDto, CancellationToken cancellationToken)
+        public async Task<ActionResult> GetAll([FromQuery] GetAllRequestDto requestDto, CancellationToken cancellationToken)
         {
             return Ok(await _repository.GetAll(requestDto, cancellationToken));
         }
 
         [HttpPost]
-        public async Task<ActionResult> Save(CancellationToken cancellationToken)
+        public async Task<ActionResult> Save([FromBody] string json, CancellationToken cancellationToken)
         {
-            string json = @"{ 
-
-firstName: ‘Ivan’, 
-
-lastName: ‘Petrov’, 
-
-address: { 
-
- 		city: ‘Kiev’, 
-
-addressLine: prospect “Peremogy” 28/7
-
-} 
-
-}";
-
             await _repository.Save(json, cancellationToken);
 
             return Ok();

@@ -15,6 +15,9 @@ namespace TestTaskApp.Common
 
         Task<IQueryable<TModel>> GetListWithIncludingAsQueryable(CancellationToken cancellationToken = default, params Expression<Func<TModel, object>>[] includeProperties);
 
+        Task<TModel> GetWithIncludingAsQueryable(IQueryable<TModel> model,
+        CancellationToken cancellationToken = default, params Expression<Func<TModel, object>>[] includeProperties);
+
         Task Add(TModel entity, CancellationToken cancellationToken = default);
     }
 }
